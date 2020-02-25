@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+    {% include 'include/header-2.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="account_operation_wrap d-flex">
+    <div class="form_wrap">
+        <div class="account_title_wrap text-center mb-3">
+            <h2  class="account_form_title">新規ユーザー登録</h2>
+        </div>
+
+        <form method="post" class="new_account_form_wrap">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <p>{{ form.username.label }}</p>
+            <p>{{ form.username }}</p>
+            {% if username_error_msg %}
+                <p class="error_msg">{{ username_error_msg }}</p>
+            {% endif %}
+
+            <p>{{ form.email.label }}</p>
+            <p>{{ form.email }}</p>
+            {% if email_error_msg %}
+                <p class="error_msg">{{ email_error_msg }}</p>
+            {% endif %}
+
+            <p>{{ form.password1.label }}</p>
+            <p>{{ form.password1 }}</p>
+            {% if password1_error_msg %}
+                <p class="error_msg">{{ password1_error_msg }}</p>
+            {% endif %}
+
+            <p>{{ form.password2.label }}</p>
+            <p>{{ form.password2 }}</p>
+            {% if password2_error_msg %}
+                <p class="error_msg">{{ password2_error_msg }}</p>
+            {% endif %}
+
+            <div class="text-center mt-4">
+                <button type="submit" name="confirm_btn" value="confirm" class="btn btn-dark">作成</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+    {% include  'include/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>{{ form.title }}</p>
+    <p>{{ form.content }}</p>
+
+    <p>{{ form.category }}</p>
+
+    <p>{{ form.tags }}</p>
+
+    <p>{{ form.thumbnail }}</p>
+    <p>{{ form.isPublic }}</p>
+    <input type="submit">
+</form>
+{% endblock %}

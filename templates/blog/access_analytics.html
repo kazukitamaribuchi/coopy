@@ -1,0 +1,78 @@
+{% load static %}
+
+<div class="access_analytics_wrap container-fluid h-100">
+    <div class="access_analytics_header row h-100">
+        <div class="access_analytics_main col-10 h-100">
+            <div class="access_analytics_main_area row h-100">
+                <div class="access_analytics_main_data col-12">
+                    <div class="access_analytics_main_header_area row h-100">
+                        <div class="col-4">
+                            <section class="access_analytics_access_value">
+                                <p>アクセス数</p>
+                                <i class="fas fa-desktop fa-2x access_analytics_icon_color_green"></i>
+                                {% if isAccess %}
+                                <span>{{ week_pv }}</span>
+                                {% else %}
+                                <span>0</span>
+                                {% endif %}
+                            </section>
+                        </div>
+                        <div class="col-4">
+                            <section class="access_analytics_user_value">
+                                <p>ユーザー数</p>
+                                <i class="fas fa-users fa-2x access_analytics_icon_color_blue"></i>
+                                {% if isAccess %}
+                                <span>{{ week_user }}</span>
+                                {% else %}
+                                <span>0</span>
+                                {% endif %}
+                            </section>
+                        </div>
+                        <div class="col-4">
+                            <section class="access_analytics_device_value">
+                                <p>デバイス</p>
+                                <i class="fas fa-mobile-alt fa-2x access_analytics_icon_color_red"></i>
+                                {% if isAccess %}
+                                <span>{{ day_device }}</span>
+                                {% else %}
+                                <span>0</span>
+                                {% endif %}
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                {% if isAccess %}
+                    <div class="access_analytics_main_image col-12">
+                        <img src="{% static pv_img_week %}">
+                    </div>
+                    <div class="access_analytics_sub_image col-12">
+                        <div class="access_analytics_sub_image_area row h-100">
+                            <div class="access_analytics_sub_image_one col-6">
+                                <img src="{% static pv_img_week_bar %}">
+                            </div>
+                            <div class="access_analytics_sub_image_two col-6">
+                                <img src="{% static user_img_week_bar %}">
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                <div class="access_analytics_main_image col-12">
+                    <img src="{% static pv_img_week %}">
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="access_analytics_sidebar col-2 h-auto">
+            <ul class="access_analytics_sidebar_ul">
+                <a href=""><li>アクセス数</li></a>
+                <a href=""><li>ユーザー数</li></a>
+                <a href=""><li>アクセスページ</li></a>
+                <a href=""><li>リンク元</li></a>
+                <a href=""><li>デバイス</li></a>
+                <a href=""><li>ブラウザ</li></a>
+                <a href=""><li>時間帯</li></a>
+                <a href=""><li>地域</li></a>
+            </ul>
+        </div>
+    </div>
+</div>

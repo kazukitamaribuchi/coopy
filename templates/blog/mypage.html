@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block headTag %}
+	{% with 'css/designTemplateCss/thema-'|add:blog.temp_no|add:'.css' as temp_css %}
+		<link href="{% static temp_css %}" rel="stylesheet" id="togleDesignTemplate">
+	{% endwith %}
+{% endblock %}
+
+{% block header %}
+	{% include 'include/header-3.html' %}
+{% endblock %}
+
+{% block content %}
+<!-- Mypage Contents START -->
+<div class="container-fluid">
+	<div class="row mypage_content_wrap">
+		<div class="mypage_side_menu col-2">
+			<p class="to_myblog"><a href="/{{ blog.url }}/">自分のサイトへ</a></p>
+			<p><a href="{% url 'blog:create_post' %}">新規記事</a></p>
+			<p><a href="{% url 'blog:edit_contents_list' %}">記事管理</a></p>
+			<p><a href="{% url 'blog:comments_list' %}">コメント</a></p>
+			<p><a href="{% url 'blog:design_customize' %}">デザインカスタマイズ</a></p>
+			<p><a href="{% url 'blog:access_analytics' %}">アクセス解析</a></p>
+			<p><a href="{% url 'blog:blog_management' user.pk %}">設定</a></p>
+			<p><a href="{% url 'blog:account_detail' user.pk %}">アカウント管理</a></p>
+			<p><a href="{% url 'blog:index' %}">TOPへ</a></p>
+		</div>
+		<div class="mypage_content col-10">
+
+			{% url "blog:mypage" as mypage %}
+			{% ifequal request.path mypage%}
+				<p>MyPage Top</p>
+			{% endifequal %}
+
+			{% url "blog:edit_contents_list"　as edit_contents_list %}
+			{% ifequal request.path edit_contents_list %}
+				{% include 'blog/edit_contents_list.html' %}
+			{% endifequal %}
+
+			{% url "blog:comments_list"　as comments_list %}
+			{% ifequal request.path comments_list %}
+				{% include 'blog/comments_list.html' %}
+			{% endifequal %}
+
+			{% url "blog:design_customize"　as design_customize %}
+			{% ifequal request.path design_customize %}
+				{% include 'blog/design_customize.html' %}
+			{% endifequal %}
+
+			{% url "blog:blog_management"　user.pk as blog_management %}
+			{% ifequal request.path blog_management %}
+				{% include 'blog/blog_management.html' %}
+			{% endifequal %}
+
+			{% url "blog:access_analytics" as access_analytics %}
+			{% ifequal request.path access_analytics %}
+				{% include 'blog/access_analytics.html' %}
+			{% endifequal %}
+
+			{% url "blog:account_detail" user.pk as account_detail %}
+			{% ifequal request.path account_detail %}
+				{% include 'register/account_detail.html' %}
+			{% endifequal %}
+
+		</div>
+	</div>
+</div>
+<!-- Mypage Contents END -->
+{% endblock %}

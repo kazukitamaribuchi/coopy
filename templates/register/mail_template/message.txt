@@ -1,0 +1,4 @@
+{{ user.username }} 様
+
+本登録用URL
+{{ protocol}}://{{ domain }}{% url 'blog:signup_complete' token %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{% endblock %}
+
+{% block header %}
+	{% include 'include/header.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-12 text-left mt-5">
+			<h2>検索結果:{{ search_result.title }}</h2>
+		</div>
+	</div>
+
+	<ul class="mt-3">
+		{% for post in posts_list %}
+		<li class="row search_result_wrap">
+			<div class="col-4 search_thumbnail_wrap">
+				{% if post.thumbnail %}
+					<a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="/media/{{ post.thumbnail }}" alt="{{ post.title }}"></a>
+				{% else %}
+					<a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="{% static 'img/light1.png' %}" alt="{{ post.title }}"></a>
+				{% endif %}
+			</div>
+			<div class="col-8">
+				<h3 class="search_title"><a href="/{{ post.blog.url }}/entry/{{ post.pk }}">{{ post.title | safe | truncatechars:22 }}</a></h3>
+				<p class="search_content">{{ post.content | safe | truncatechars:60 }}</p>
+			</div>
+		</li>
+
+		{% empty %}
+			<p>該当する記事が存在しません。</p>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}
+
+<!-- ページネーション STRAT -->
+{% block paginate %}
+    <div class="pagination_wrap mt-5">
+        {% include 'pagination.html' %}
+    </div>
+{% endblock %}
+<!-- ページネーション END -->

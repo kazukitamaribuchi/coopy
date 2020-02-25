@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+    {% include  'include/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid create_post_form">
+    <div class="row">
+        <div class="create_post_content col-9 col-xl-10">
+            <p>{{ form.title }}</p>
+            <p>{{ form.content }}</p>
+        </div>
+
+        <div class="col-3 col-xl-2 create_post_sidebar">
+            <form method="post" id="post_form" enctype="multipart/form-data" >
+                {% csrf_token %}
+                <p>
+                    <button type="submit" name="draft_btn" value="draft_post" class="btn btn-block btn-dark">下書き保存</button>
+                </p>
+                <p>
+                    <button type="submit" name="update_content_btn" value="update_content" class="btn btn-block btn-success">投稿する</button>
+                </p>
+            </form>
+
+            <p>カテゴリー{{ form.category }}</p>
+            <form method="post" id="add_category_form">
+                {% csrf_token %}
+                <input type="text" name="text" id="add_category" placeholder="カテゴリー追加">
+                <button type="submit" id="add_category_btn" name="add_category_btn" value="add_category" class="btn btn-dark"><i class="fas fa-plus"></i></button>
+                <p class="add_category_success_msg"></p>
+                <p class="error_msg add_category_error_msg"></p>
+            </form>
+
+            <p>タグ{{ form.tags }}</p>
+            <form method="post" id="add_tag_form">
+                {% csrf_token %}
+                <input type="text" name="text" id="add_tag" placeholder="タグ追加">
+                <button type="submit" id="add_tag_btn" name="add_tag_btn" value="add_tag" class="btn btn-dark"><i class="fas fa-plus"></i></button>
+                <p class="add_tag_success_msg"></p>
+                <p class="error_msg add_tag_error_msg"></p>
+            </form>
+
+            <p>サムネイルアップロード
+                <img id='file_preview' src="/media/{{ post.thumbnail }}" width='100%' alt="">
+                <label id="id_thumbnail_wrap" class="btn btn-dark" for="id_thumbnail">
+                    ファイルを選択
+                    {{ form.thumbnail }}
+                </label>
+            </p>
+            <form method="post" id="add_thumbnail_form">
+                {% csrf_token %}
+            </form>
+
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 text-center mt-3">
+            <a href="{% url 'blog:index' %}" class="btn btn-danger">CLOSE</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

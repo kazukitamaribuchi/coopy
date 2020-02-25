@@ -1,0 +1,77 @@
+{% load static %}
+<header class="container-fluid">
+	<div class="row header_wrap d-flex">
+		<h1 class="logo col-4 text-left">
+			<!-- <a href="{% url 'blog:index' %}"><img src="{% static 'img/blog_service_logo.png' %}" alt="blog_logo" class="logo_image"></a> -->
+		</h1>
+		<!-- ユーザー認証済:true -->
+		{% if user.is_authenticated %}
+			<div class="col-8">
+				<div class="container">
+					<div class="row">
+						<div class="menu_wrap col-6">
+							{% url 'blog:create_post' as create_post %}
+							{% url 'blog:mypage' as mypage %}
+							{% url 'blog:edit_content' post.pk as edit_content %}
+							{% ifnotequal request.path create_post %}
+							{% ifnotequal request.path mypage %}
+							{% ifnotequal request.path edit_content %}
+							<form method="get" action="{% url 'blog:search_result' %}" class="post_search_form">
+								{% for field in post_search_form %}
+									{{ field }}
+								{% endfor %}
+								<button type="submit" class="post_search_button"><i class="fas fa-search"></i></button>
+							</form>
+							{% endifnotequal %}
+							{% endifnotequal %}
+							{% endifnotequal %}
+						</div>
+						<div class="col-5">
+							<a class="login_username" href="{% url 'blog:mypage' %}">{{ user.username }}</a>
+						</div>
+						<div class="humbergermenu_wrap col-1">
+							<button id="open_btn" type="button" name="button"><i class="fas fa-bars open_btn_icon"></i></button>
+							<div id="nav_contents">
+								<button id="close_btn" type="button" name="button"><i class="fas fa-times close_btn_icon"></i></button>
+								<ul class="humbergermenu_contents text-left mt-5">
+									<li class="humbergermenu_contents_list"><a href="{% url 'blog:mypage' %}">マイページ</a></li>
+									<li class="humbergermenu_contents_list"><a href="{% url 'blog:create_post' %}">記事投稿</a></li>
+									<li class="humbergermenu_contents_list"><a href="{% url 'blog:edit_contents_list' %}">記事管理</a></li>
+									<li class="humbergermenu_contents_list"><a href="{% url 'blog:comments_list' %}">コメント</a></li>
+									<li class="humbergermenu_contents_list"><a href="{% url 'blog:account_detail' user.pk %}">アカウント管理</a></li>
+									<li class="humbergermenu_contents_list"><a href="#">ヘルプ</a></li>
+									<li class="humbergermenu_contents_list"><a href="{% url 'blog:logout' %}">ログアウト</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% else %}
+			<div class="col-5 offset-3 mt-3">
+				<div class="container">
+					<div class="row">
+						<div class="menu_wrap col-8">
+							<form method="get" action="{% url 'blog:search_result' %}" class="post_search_form">
+								{% for field in post_search_form %}
+									{{ field }}
+								{% endfor %}
+								<button type="submit" class="post_search_button"><i class="fas fa-search"></i></button>
+							</form>
+						</div>
+						<div class="col-4">
+							<div class="container">
+								<div class="row">
+									<ul>
+										<li class="col-6 menu_list"><a href="{% url 'blog:login' %}">Login</a></li>
+										<li class="col-6 menu_list"><a href="{% url 'blog:signup' %}">Signup</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+</header>

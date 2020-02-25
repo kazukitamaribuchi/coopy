@@ -1,0 +1,81 @@
+{% if is_paginated %}
+
+<ul class="pagination">
+
+    {% if page_obj.number == page_obj.paginator.num_pages and page_obj.paginator.num_pages >= 6 %}
+        <li class="pagination_prev_first"><a href="?{{ query_string }}&page=1">TOP</a></li>
+    {% endif %}
+
+    {% if page_obj.has_previous %}
+        <li class="pagination_prev"><a href="?{{ query_string }}&page={{ page_obj.previous_page_number }}">前</a></li>
+        <!-- <li class="pagination_prev">{{ page_obj.previous_page_number }}へ</li> -->
+    {% else %}
+        <li class="pagination_prev">前</li>
+    {% endif %}
+
+
+    {% for link_page in page_obj.paginator.page_range %}
+        {% if link_page %}
+            <!-- 現在のページが３ページ以下の時 -->
+            {% if page_obj.number <= 3 %}
+
+                <!-- 現在のページは目立たせる -->
+                {% if link_page == page_obj.number %}
+                    <li class="now_page">{{ link_page }}</li>
+
+                <!-- 現在以外のページ -->
+                {% else %}
+                    {% if link_page <= 5 %}
+                        <li class="page_list"><a href="?{{ query_string }}&page={{ link_page }}">{{ link_page }}</a></li>
+                    {% elif link_page == page_obj.paginator.num_pages %}
+                        <li class="page_continue">...</li>
+                    {% else %}
+                        <!-- 最後のページ以外はスルー -->
+                    {% endif %}
+
+                {% endif %}
+
+            <!-- 現在ページが4ページ以降 -->
+            {% else %}
+                <!-- 現在のページは目立たせる -->
+                {% if link_page == page_obj.number %}
+                    <li class="now_page">{{ link_page }}</li>
+
+                <!-- 現在以外のページ -->
+                {% else %}
+
+                    <!-- 現在のページから+-２ページ表示させる -->
+                    {% if link_page >= page_obj.number|add:-2 and link_page <= page_obj.number|add:2 %}
+                        <li class="page_list"><a href="?{{ query_string }}&page={{ link_page }}">{{ link_page }}</a></li>
+
+                    {% else %}
+                        {% if link_page == page_obj.paginator.num_pages %}
+                            <li class="page_continue">...</li>
+                        {% elif link_page == page_obj.paginator.page_range|first %}
+                            <li class="page_continue">...</li>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+
+            {% endif %}
+
+        {% else %}
+            <li><a href="#">・・・</a></li>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <li class="pagination_next"><a href="?{{ query_string }}&page={{ page_obj.next_page_number }}">次</a></li>
+        <!-- <li class="pagination_next">{{ page_obj.next_page_number }}へ</li> -->
+    {% else %}
+        <li class="pagination_next">次</li>
+    {% endif %}
+
+    {% if page_obj.number == 1 and page_obj.paginator.num_pages >= 6  %}
+        <li class="pagination_next_last"><a href="?{{ query_string }}&page={{ page_obj.paginator.num_pages }}">LAST</a></li>
+    {% endif %}
+
+ </ul>
+{% else %}
+
+{% endif %}

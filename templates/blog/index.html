@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block header %}
+    {% include 'include/header.html' %}
+{% endblock%}
+
+<!-- Top画像読み込み -->
+{% block top_image %}
+<div class="index_top_image">
+    <img src="{% static 'img/blog_service_backimage-2.jpg' %}" alt="index_top_image">
+</div>
+{% endblock %}
+
+{% block content %}
+
+<!-- メインコンテンツ START -->
+<div class="container">
+<!-- ユーザー認証済:true -->
+{% if user.is_authenticated %}
+    <div class="row">
+        <div class="col-12 text-center mt-5">
+            <h2 class="content_title">あなたへのオススメ</h2>
+        </div>
+    </div>
+
+    <ul class="container">
+        <div class="row">
+            <!-- あなたへのオススメ記事表示 -->
+            {% for post in posts_list %}
+            <li class="article col-4 mt-4">
+                <div class="post_thumbnail_wrap">
+                    <!-- サムネの有無確認 -->
+                    {% if post.thumbnail %}
+                        <a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="/media/{{ post.thumbnail }}" alt="{{ post.title }}"></a>
+                    {% else %}
+                        <a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="{% static 'img/light1.png' %}" alt="thumbnail_none"></a>
+                    {% endif %}
+                </div>
+
+                <div class="post_title_wrap">
+                    <h3 class="post_title"><a href="/{{ post.blog.url }}/entry/{{ post.pk }}">{{ post.title | safe | truncatechars:22 }}</a></h3>
+                </div>
+
+                <div class="post_content_wrap">
+                    <p class="post_content">{{ post.content | safe | truncatechars:60 }}</p>
+                </div>
+
+                <div class="post_detail_wrap text-right mb-4">
+                    <a href="/{{ post.blog.url }}/entry/{{ post.pk }}" class="post_detail p-2">more</a>
+                </div>
+            </li>
+
+            {% empty %}
+                <p>記事がありません</p>
+            {% endfor %}
+        </div>
+    </ul>
+{% else %}
+
+{% endif %}
+    <div class="row">
+        <div class="col-12 text-center mt-5">
+            <h2 class="content_title">人気記事</h2>
+        </div>
+
+        <ul class="container">
+            <div class="row">
+                <!-- 人気記事の表示 -->
+                {% for post in popular_posts_list %}
+
+                <li class="article col-4 mt-4">
+
+                    <div class="post_thumbnail_wrap">
+                        <!-- サムネの有無確認 -->
+                        {% if post.thumbnail %}
+                            <a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="/media/{{ post.thumbnail }}" alt="{{ post.title }}"></a>
+                        {% else %}
+                            <a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="{% static 'img/light1.png' %}" alt="thumbnail_none"></a>
+                        {% endif %}
+                    </div>
+
+                    <div class="post_title_wrap">
+                        <h3 class="post_title"><a href="/{{ post.blog.url }}/entry/{{ post.pk }}">{{ post.title | safe | truncatechars:22 }}</a></h3>
+                    </div>
+
+                    <div class="post_content_wrap">
+                        <p class="post_content">{{ post.content | safe | truncatechars:60 }}</p>
+                    </div>
+
+                    <div class="post_detail_wrap text-right mb-4">
+                        <a href="/{{ post.blog.url }}/entry/{{ post.pk }}" class="post_detail p-2">more</a>
+                    </div>
+                </li>
+
+                {% empty %}
+                    <p>記事がありません</p>
+                {% endfor %}
+            </div>
+        </ul>
+    </div>
+</div>
+<!-- メインコンテンツ END -->
+
+{% endblock %}
+
+<!-- ページネーション STRAT -->
+{% block paginate %}
+    <div class="pagination_wrap mt-5">
+        {% include 'pagination.html' %}
+    </div>
+{% endblock %}
+<!-- ページネーション END -->

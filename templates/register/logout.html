@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+	{% include 'include/header-2.html'%}
+{% endblock %}
+{% block content %}
+
+<div class="account_operation_wrap d-flex">
+    <div class="form_wrap">
+        <div class="account_title_wrap text-center mb-3">
+            <h2  class="account_form_title">ログアウトしました</h2>
+        </div>
+		<div class="logout_form text-center mt-4">
+			<button class="btn btn-dark " type="button" name="button"><a href="{% url 'blog:index' %}">Topへ</a></button>
+			<button class="btn btn-dark" type="button" name="button"><a href="{% url 'blog:login' %}">再度ログイン</a></button>
+		</div>
+    </div>
+</div>
+
+{% endblock %}

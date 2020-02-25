@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+	{{ detail.title }}
+{% endblock %}
+
+{% block header %}
+    {% include 'include/header.html' %}
+{% endblock%}
+
+{% block content %}
+	<div class="detail_contents_wrap">
+		<div class="detail_title mb-2">
+			<p>{{ detail.title }}</p>
+		</div>
+
+		<div class="detail_category_wrap">
+			<a href="{% url 'blog:category_list' detail.category.name %}"><p class="detail_category">{{ detail.category.name }}</p></a>
+		</div>
+
+		<div class="detail_tag_wrap">
+			{% for tag in detail.tags.all %}
+				<i class="fas fa-tag pr-1"></i><a href="{% url 'blog:tags_list' tag.name %}"><p class="detail_tag">{{ tag.name }}</p></a>
+			{% endfor %}
+		</div>
+
+		<div class="detail_contributor_wrap">
+			<p class="detail_contributor"><i class="fas fa-user pr-1"></i><a href="/{{ detail.blog.url }}/">{{ detail.blog.user }}</a></p>
+		</div>
+
+
+		<div class="detail_thumbnail_wrap mt-2">
+			<!-- サムネの有無確認 -->
+			{% if detail.thumbnail %}
+				<img src="/media/{{ detail.thumbnail }}" alt="{{ detal.title }}">
+			{% else %}
+				<img src="{% static 'img/light1.png' %}" alt="thumbnail_none">
+			{% endif %}
+		</div>
+
+		<div class="detail_text_wrap mt-5">
+			<p class="detail_content">{{ detail.content }}</p>
+		</div>
+
+		<h3 class="mt-5">この記事へのコメント</h3>
+		<div class="detail_comments_list_wrap container mt-3 p-3">
+			{% for comment in detail.comment_set.all %}
+				{% if comment.is_public %}
+					<div class="comment_group mt-3 mb-3 p-3">
+						<p class="posted_comment_name"><strong>{{ comment.name }}</strong></p>
+						<p class="posted_comment_text mt-1">{{ comment.text }}</p>
+						<p class="posted_comment_dates mt-1 text-right">{{ comment.created_at | date:"Y/m/d H:i "}}</p>
+					</div>
+				{% endif %}
+			{% empty %}
+				<p>コメントがありません</p>
+			{% endfor %}
+		</div>
+
+		{% if user.is_authenticated %}
+		<h3 class="mt-5">コメント投稿</h3>
+		<section class="comment_form_wrap mt-2 pb-3">
+			<form class="container posted_comment_form" method="post">
+				{% csrf_token %}
+				{{ form.non_field_error }}
+				{% for field in form %}
+					<label for="{{ field.id_for_label }}">{{ field.tag }}</label>
+					<p>{{ field }}</p>
+					<p>{{ field.error }}</p>
+				{% endfor %}
+				<div class="text-right mt-3">
+					<button type="submit" class="comment_submit btn btn-info">送信</button>
+				</div>
+			</form>
+		</section>
+		{% endif %}
+
+	</div>
+{% endblock %}

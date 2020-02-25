@@ -1,0 +1,25 @@
+{% load static %}
+
+{% include 'include/modal.html' %}
+
+<p>ブログ管理画面</p>
+
+<p class="update_blog_success_msg"></p>
+<form method="post" id="update_username_form">
+    {% csrf_token %}
+
+    <p>{{ form.title.label }}</p>
+    <p>{{ form.title }}</p>
+    <p class="error_msg update_blog_title_error_msg"></p>
+    <p><button id="update_blog_title_btn">更新する</button></p>
+
+    <p>{{ form.url.label }}</p>
+    <p>{{ form.url }}</p>
+    <p class="error_msg update_blog_url_error_msg"></p>
+    <p><button id="update_blog_url_btn">更新する</button></p>
+
+    <p><button id="update_blog_all_btn">一括更新する</button></p>
+    <p class="error_msg update_blog_info_all_error_msg"></p>
+</form>
+
+<p><a href="{% url 'blog:index' %}">TOPへ</a></p>

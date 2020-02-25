@@ -1,0 +1,99 @@
+{% load static %}
+
+{% include 'include/modal.html' %}
+<div class="design_customize_wrap row">
+	<div class="temp_view_wrap col-9">
+		<div class="myblog_top_wrap">
+		    {% if user.username %}
+		    <h2 class="myblog_top_title">{{ user.username }}'s Blog</h2>
+		    {% else %}
+		    <h2 class="myblog_top_title">{{ user.email }}'s Blog</h2>
+		    {% endif %}
+		    <!-- <div class="myblog_top_bgimg"></div> -->
+		</div>
+
+		<!-- メインコンテンツ START -->
+		<!-- テーマ３のことも考えてこの部分は非表示にして、別でhtmlを生成する方法を取るか検討中 -->
+		<!-- とりあえずテーマ1が出来るまで、現状はこのままデザインを進めていく -->
+		<ul class="myblog_main_wrap">
+
+		    {% for post in posts_list %}
+		        <li class="myblog_contents_list_wrap">
+		            <div class="myblog_thumbnail_wrap">
+		                <!-- サムネの有無確認 -->
+		                {% if post.thumbnail %}
+		                    <a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="/media/{{ post.thumbnail }}" alt="{{ post.title }}"></a>
+		                {% else %}
+		                    <a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="{% static 'img/light1.png' %}" alt="thumbnail_none"></a>
+		                {% endif %}
+		            </div>
+
+		            <div class="myblog_info_warp">
+
+		                <div class="myblog_title_wrap">
+		                    <p class="myblog_title"><a href="/{{ post.blog.url }}/entry/{{ post.pk }}">{{ post.title | safe | truncatechars:22 }}</a></p>
+		                </div>
+
+		                <div class="myblog_content_wrap">
+		                    <p class="myblog_content">{{ post.content | safe | truncatechars:200 }}</p>
+		                </div>
+
+		                <div class="myblog_category_wrap">
+		                    {% if post.category == None %}
+		                    <p class="myblog_category">未分類</p>
+		                    {% else %}
+		                    <p class="myblog_category">{{ post.category }}</p>
+		                    {% endif %}
+		                </div>
+
+		                <div class="myblog_date_wrap">
+		                    <p class="myblog_created_at">{{ post.created_at | date:'Y/m/d' }}</p>
+		                    <p class="myblog_updated_at">{{ post.updated_at | date:'Y/m/d' }}</p>
+		                </div>
+
+		                <div class="myblog_detail_wrap">
+		                    <a href="/{{ post.blog.url }}/entry/{{ post.pk }}" class="myblog_detail">more</a>
+		                </div>
+
+		            </div>
+		        </li>
+
+		    {% empty %}
+		        <p>記事がありません。</p>
+		    {% endfor %}
+
+		</ul>
+
+		<!-- メインコンテンツ END -->
+
+		<!-- ページネーション STRAT -->
+		{% block paginate %}
+		    <div class="pagination_wrap mt-5">
+		        {% include 'pagination.html' %}
+		    </div>
+		{% endblock %}
+		<!-- ページネーション END -->
+	</div>
+
+	<!-- テンプレート選択画面 -->
+	<div class="design_customize_sidebar col-3">
+		<button class="design_customize_submit_btn btn btn-info" type="button" name="button">変更を保存する</button>
+		<ul class="temp_list mt-3" data-temp-no="{{ blog.temp_no }}">
+
+			<li>
+				<img src="{% static 'img/Sample Design-1.png' %}" alt="thema-1">
+				<div class="temp_select_wrap">
+					<button class="temp_select_btn btn btn-dark" type="button" name="temp_select_btn" data-temp-no="1">Thema-1</button>
+				</div>
+			</li>
+
+			<li>
+				<img src="{% static 'img/Sample Design-2.png' %}" alt="thema-1">
+				<div class="temp_select_wrap">
+					<button class="temp_select_btn btn btn-dark" type="button" name="temp_select_btn" data-temp-no="2">Thema-2</button>
+				</div>
+			</li>
+
+		</ul>
+	</div>
+</div>

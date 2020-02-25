@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Page Not Found
+{% endblock %}
+
+{% block content %}
+    <p>404 Not Found</p>
+    <p>お探しのページは見つかりませんでした。</p>
+    <p><a href="{% url 'blog:index' %}">TOPページへ戻る</a></p>
+{% endblock %}

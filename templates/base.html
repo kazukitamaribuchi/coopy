@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=width=device-width, initial-scale=1">
+        <!-- <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet"> -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+        <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:300" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Noto+Serif+JP" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,700|Noto+Sans+JP:100,400,900&display=swap" rel="stylesheet">
+        {% block headTag %}{% endblock %}
+        <!-- <link href="{% static 'css/designTemplateCss/thema-1.css' %}" rel="stylesheet" id="togleDesignTemplate"> -->
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+
+        <script type="text/javascript" src="{% static 'js/jquery-3.4.1.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+        <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/style.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+
+    <body>
+        <div id="wrap" class="container-fluid">
+            <div id="main">
+            <!-- <div id="main_content"> -->
+                {% block header %}
+                {% endblock %}
+
+                {% block top_image %}
+                {% endblock %}
+
+                {% block content %}
+                {% endblock %}
+
+                {% block paginate %}
+                {% endblock %}
+            </div>
+
+        {% include 'include/footer.html' %}
+
+        </div>
+    </body>
+</html>

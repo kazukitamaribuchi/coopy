@@ -1,0 +1,62 @@
+{% load static %}
+
+{% include 'include/modal.html' %}
+
+<div class="container-fluid">
+	<div class="row mb-2">
+		<div class="col-12">
+			<h3>記事の管理</h3>
+		</div>
+	</div>
+
+	<div class="row mb-2">
+		<ul class="col-12 comments_list_nav">
+			<li class="col-4">記事タイトル</li>
+			<li class="col-4">コメント内容</li>
+			<li class="col-2">コメント詳細</li>
+			<li class="col-2">ステータス</li>
+		</ul>
+	</div>
+
+	<ul class="col-12 comments_list_wrap">
+		{% for comment in object_list %}
+		<div class="row p-1 comment_contents" comment_pk='{{ comment.pk }}'>
+			<li class="col-4"><a href="/{{ blog.url }}/entry/{{ comment.target.pk }}a">{{ comment.target.title }}</a></li>
+			<li class="col-4">{{ comment.text | safe | truncatechars:30 }}</li>
+			<li class="col-2" style="justify-content:center;">
+				<button type="button" name="" class="btn btn-dark detail_comment_btn" data-target="#detail_comment" value="{{ comment.pk }}">詳細へ</button>
+			</li>
+			<li class="col-2" style="justify-content:center;">
+				{% if comment.is_public %}
+				<select class="select_comment_status" name="">
+					<option value="承認" selected>承認</option>
+					<option value="非承認">非承認</option>
+					<option value="削除">削除</option>
+				</select>
+				{% else %}
+				<select class="select_comment_status" name="">
+					<option value="承認">承認</option>
+					<option value="非承認" selected>非承認</option>
+					<option value="削除">削除</option>
+				</select>
+				{% endif %}
+				<button type="button" name="" class="btn btn-info comment_ok_btn" value="{{ comment.pk }}" disabled>OK</button>
+			</li>
+			<li class='comment_name'hidden>{{ comment.name }}</li>
+			<li class='comment_text'hidden>{{ comment.text }}</li>
+			<li class='comment_email'hidden>{{ comment.email }}</li>
+			<li class='comment_created_at'hidden>{{ comment.created_at }}</li>
+			<li class='comment_is_public'hidden>{{ comment.is_public }}</li>
+		</div>
+		{% endfor %}
+	</ul>
+
+</div>
+
+<!-- ページネーション STRAT -->
+{% block paginate %}
+    <div class="pagination_wrap mt-5">
+        {% include 'pagination.html' %}
+    </div>
+{% endblock %}
+<!-- ページネーション END -->

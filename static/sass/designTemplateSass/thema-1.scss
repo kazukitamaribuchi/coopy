@@ -1,0 +1,88 @@
+@import "setting_template";
+/* --------------------サイトメイントップ-------------------- */
+/**
+ * @param
+ * bgImg(img_title, bg_width, bg_height, img_type)
+ * font(font-size, color, font-weight, font-family)
+ **/
+.myblog_top_wrap {
+	@include bgImg($img_title : 'thema-1-bgimg', $bg_height: 300px, $img_type: 'jpg');
+	margin-bottom: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.myblog_top_title {
+		@include font($font-size:38px, $color:#F7F7F7, $font-weight:100);
+	}
+}
+
+/* --------------------サイトメインコンテンツ-------------------- */
+/**
+ * @param
+ * thumbnail(height, width)
+ **/
+
+.myblog_main_wrap {
+	@include make-container();
+	@include make-container-max-widths();
+
+	.myblog_contents_list_wrap {
+		padding: 20px 0px;
+		@include borderBottomSet();
+		@include make-row();
+
+		.myblog_thumbnail_wrap {
+			@include make-col(5);
+
+ 			a img {
+				width: 233px;
+				height: 350px;
+			}
+		}
+
+		.myblog_info_warp{
+			@include make-col(7);
+
+			.myblog_title {
+				@include font(24px, #454C55, 700);
+			}
+
+			.myblog_content_wrap {
+				height: 170px;
+				word-wrap: break-word;
+
+				.myblog_content {
+					@include font(16px);
+				}
+			}
+
+			.myblog_category_wrap {
+				display: none;
+			}
+
+			.myblog_date_wrap {
+				float: left;
+
+				p {
+					@include font(14px, #A0A0A0);
+					display: inline-block;
+
+					&:not(:first-of-type) {
+						padding-left: 10px;
+					}
+				}
+			}
+
+			.myblog_detail_wrap {
+				text-align: right;
+
+				a {
+					@include btn($accent_color);
+					padding: 0.25rem;
+				}
+			}
+		}
+
+	}
+}

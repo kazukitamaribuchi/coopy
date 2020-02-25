@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+    {% include 'include/header-2.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="account_operation_wrap d-flex">
+    <div class="form_wrap text-center">
+        <p>ユーザー認証完了</p>
+        <p><a class="btn btn-info mt-2" href="{% url 'blog:login' %}">ログイン</a></p>
+    </div>
+</div>
+{% endblock %}

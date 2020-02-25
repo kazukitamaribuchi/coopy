@@ -1,0 +1,44 @@
+{% load static %}
+
+{% include 'include/modal.html' %}
+
+<p class="update_account_success_msg"></p>
+<p>アカウント管理画面</p>
+
+<p id="form_msg"></p>
+
+<form method="post" id="update_username_form">
+    {% csrf_token %}
+
+
+    <p>{{ updateAcountForm.username.label }} : <span class="account_detail_username">{{ user.username }}</span></p>
+    <p>{{ updateAcountForm.username }}</p>
+    <p class="error_msg update_username_error_msg"></p>
+    <p><button id="update_username_btn">更新する</button></p>
+
+    <p>{{ updateAcountForm.email.label }} : <span class="account_detail_email">{{ user.email }}</span></p>
+    <p>{{ updateAcountForm.email }}</p>
+    <p class="error_msg update_email_error_msg"></p>
+    <p><button id="update_email_btn">更新する</button></p>
+
+    <p>{{ updateAcountForm.password.label }}</p>
+    <p>{{ updateAcountForm.password }}</p>
+    <p class="error_msg update_password_error_msg"></p>
+
+    <p>{{ updateAcountForm.new_password.label }}</p>
+    <p>{{ updateAcountForm.new_password }}</p>
+    <p class="error_msg update_new_password_error_msg"></p>
+
+    <p>{{ updateAcountForm.new_password_confirm.label }}</p>
+    <p>{{ updateAcountForm.new_password_confirm }}</p>
+    <p class="error_msg update_new_password_confirm_error_msg"></p>
+
+    <!-- <p class="update_password_error_msg"></p> -->
+
+    <p><button id="update_password_btn">更新する</button></p>
+
+    <p><button id="update_all_btn">一括更新する</button></p>
+
+</form>
+
+<p><a href="{% url 'blog:index' %}">TOPへ</a></p>

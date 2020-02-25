@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    コメント確認画面
+{% endblock %}
+
+{% block header %}
+    {% include 'include/header-2.html' %}
+{% endblock %}
+
+{% block content %}
+
+<section class="comment_success_wrap d-flex">
+    <div class="comment_message_wrap">
+        <div class="text-center mb-3">
+            <h2 class="">コメント完了</h2>
+        </div>
+        <p>コメントを送信しました。管理人が承認するまでお待ちください。</p>
+        <div class="text-center mt-4">
+            <button class="btn btn-dark " type="button" name="button"><a href="{% url 'blog:index' %}">Topへ</a></button>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

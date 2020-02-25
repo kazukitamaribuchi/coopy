@@ -1,0 +1,48 @@
+{% load static %}
+
+{% include 'include/modal.html' %}
+
+<div class="container-fluid">
+	<div class="row mb-2">
+		<div class="col-12">
+			<h3>記事の管理</h3>
+		</div>
+	</div>
+
+	<div class="row mb-2">
+		<ul class="col-12 edit_contents_nav">
+			<li class="col-4">記事タイトル</li>
+			<li class="col-3">カテゴリー</li>
+			<li class="col-2">タグ</li>
+			<li class="col-1">投稿日時</li>
+			<li class="col-1">編集</li>
+			<li class="col-1">削除</li>
+		</ul>
+	</div>
+
+		<ul class="col-12 edit_contents_list_wrap">
+			{% for post in posts_list %}
+			<div class="row p-1 edit_contents" content_pk="{{ post.pk }}">
+				<li class="col-4"><a class="" href="/{{ post.blog.url }}/entry/{{ post.pk }}">{{ post.title | safe | truncatechars:30 }}</a></li>
+				<li class="col-3">{{ post.category.name }}</li>
+				<li class="col-2">
+				{% for tag in post.tags.all %}
+					{{ tag }}
+				{% endfor %}
+				</li>
+				<li class="col-1">{{ post.updated_at | date:"Y/m/d" }}</li>
+
+				<li class="col-1" style="justify-content:center;"><a class="btn btn-dark edit_btn" href="{% url 'blog:edit_content' post.pk %}">編集</a></li>
+				<li class="col-1" style="justify-content:center;"><button class="btn btn-danger delete_confirm_btn" data-target="#delete_confirm" value="{{ post.pk }}">削除</button></li>
+			</div>
+			{% endfor %}
+		</ul>
+</div>
+
+<!-- ページネーション STRAT -->
+{% block paginate %}
+    <div class="pagination_wrap mt-5">
+        {% include 'pagination.html' %}
+    </div>
+{% endblock %}
+<!-- ページネーション END -->

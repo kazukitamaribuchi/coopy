@@ -1,0 +1,84 @@
+// @import '../bootstrap_scss/custom-bootstrap';
+@import '../bootstrap_scss/bootstrap';
+/**
+ * 変数・Mixin用のSassファイルです。
+ **/
+/**************変数定義**************/
+// ヘッダー高さ
+$header_height: 80px;
+// デフォルトのフォント
+$default_font_family: 'Noto Sans JP', sans-serif;
+// デフォルト値：トップ背景画像
+$bg_width: 100%;
+$bg_height: 300px;
+// デフォルト値：サムネイル高さ
+$thumbnail_height: 233px;
+// デフォルト値：サムネイル幅
+$thumbnail_width: 350px;
+// デフォルト値：アクセントカラー
+$accent_color:#374C5D;
+
+/**************mixin定義**************/
+@mixin bgImg($kewags...){
+	$default : (img_title:'', bg_width:100%, bg_height:$thumbnail_height, img_type:'png');
+	$kewags : keywords($kewags);
+	$merge : map-merge($default, $kewags);
+	$img_title : map-get($merge, img_title);
+	$bg_width : map-get($merge, bg_width) !global;
+	$bg_height : map-get($merge, bg_height) !global;
+	$img_type : map-get($merge, img_type);
+
+	margin:0;
+	padding: 0;
+	width: $bg_width;
+	height: $bg_height;
+
+	@if $img_title != '' {
+		background-image: url('../../img/#{$img_title}' + '.' + '#{$img_type}');
+		background-position: center;
+		background-size: cover;
+	}
+}
+
+@mixin font($kewags...){
+	$default : (font-size:18px, color:#454C55, font-weight:normal, font-family:$default_font_family);
+	$kewags : keywords($kewags);
+	$merge : map-merge($default, $kewags);
+	$font-size : map-get($merge, font-size);
+	$color : map-get($merge, color);
+	$font-weight : map-get($merge, font-weight);
+	$font-family : map-get($merge, font-family);
+
+	font-family: $font-family;
+	font-size: $font-size;
+	color: $color;
+	font-weight: $font-weight;
+}
+
+@mixin borderSet($border_type:solid, $border_size:1px, $border_color:#A0A0A0){
+	border: $border_type $border_size $border_color;
+}
+
+@mixin borderTopSet($border_type:solid, $border_size:1px, $border_color:#A0A0A0){
+	border-top: $border_type $border_size $border_color;
+}
+
+@mixin borderBottomSet($border_type:solid, $border_size:1px, $border_color:#A0A0A0){
+	border-bottom: $border_type $border_size $border_color;
+}
+
+@mixin btn($accent_color){
+	color: lighten($accent_color, 100%);
+	background-color: $accent_color;
+	transition: .2s ease-in-out;
+
+	&:hover{
+		color: darken($accent_color, 100%);
+		background-color: lighten($accent_color, 50%);
+	}
+}
+
+/**************function定義**************/
+@function contentHeight($header_height, $bg_height){
+	@return $header_height + $bg_height;
+}

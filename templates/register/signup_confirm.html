@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+    {% include 'include/header-2.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="account_operation_wrap d-flex">
+    <div class="form_wrap">
+        <div class="text-center mb-3">
+            <h2>内容を確認してください</h2>
+        </div>
+        <table class="table">
+            <tr>
+                <th scope="row">username</th>
+                <td class="col">{{ form.username.value }}</td>
+            </tr>
+            <tr>
+                <th scope="row">email</th>
+                <td class="col">{{ form.email.value }}</td>
+            </tr>
+            <tr>
+                <th scope="row">password</th>
+                <td class="col">********</td>
+            </tr>
+        </table>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                {{ field.as_hidden }}
+            {% endfor %}
+            <div class="text-center">
+                <button type="submit" class="btn btn-dark" name="back_btn" value="back">戻る</button>
+                <button type="submit" class="btn btn-info" name="create_btn" value="create">作成</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

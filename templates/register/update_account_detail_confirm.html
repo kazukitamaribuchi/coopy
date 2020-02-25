@@ -1,0 +1,21 @@
+{% load static %}
+
+<p>アカウント情報一括変更</p>
+
+<p id="form_msg"></p>
+
+<form method="post" id="update_account_detail_form">
+    {% csrf_token %}
+    <p>ユーザーネーム:</p>
+    <p id="username">{{ user.user_name }}</p>
+    <p>{{ form.username }}<button type="submit" id="update_username_btn" name="update_username_btn" value="update_username">更新する</button></p>
+    <p id="update_username_error"></p>
+    <p>Email:</p>
+    <p id="email">{{ user.email }}</p>
+    <p>{{ form.email }}<button type="submit" id="update_email_btn" name="update_email_btn" value="update_email">更新する</button></p>
+    <p id="update_email_error"></p>
+
+    <p><button type="submit" id="update_account_detail_btn" name="update_account_detail_btn" value="update_account_detail">一括更新する</button></p>
+</form>
+
+<p><a href="{% url 'blog:index' %}">TOPへ</a></p>
