@@ -12,25 +12,47 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import logging
+import environ
+import dj_database_url
+from socket import gethostname
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+env = environ.ENV()
+env.read_env(os.path.join(BASE_DIR, 'env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^18!i-=d@oty0c)f(6d^q7bgm*gxf468o-wyf-z&y%at-8sc-p'
+HOSTNAME = gethostname()
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 # DEBUG = False
+if 'local' in HOSTNAME:
+    # ローカル環境の設定
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = env.get_value('DEBUG', cast=bool, default=False)
+    SECRET_KEY = env('SECRET_KEY')
+    ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+    DATABASES = env.dict('DATABASE')
 
-ALLOWED_HOSTS = [
-    '192.168.33.11',
-    '192.168.33.13',
-]
+else:
+    # 本番環境の設定
+    DEBUG = False
+    SECRET_KEY = environ['SECRET_KEY']
+    ALLOWED_HOSTS = ['*']
+    db_from_env = dj_database_url.config()
+    DATABASES = {
+        'default' : dj_database_url.config()
+    }
+
+
+
+
+
+
+
 
 if DEBUG:
     logging.basicConfig(
@@ -40,7 +62,7 @@ if DEBUG:
 else:
     logging.basicConfig(
         level = logging.DEBUG,
-        format = '''%(levelname)s %(asctime)s %(pathname)s:%(funcName)s 行数:%(lineno)s:%(lineno)s 
+        format = '''%(levelname)s %(asctime)s %(pathname)s:%(funcName)s 行数:%(lineno)s:%(lineno)s
         %(message)s'''
         # filename = 'logs/debug.log',
         # filemode = 'a'
