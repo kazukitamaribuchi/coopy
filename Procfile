@@ -1,1 +1,1 @@
-web: gunicorn DjangoApp.wsgi --log-file -
+web: gunicorn coopy.wsgi --log-file -
