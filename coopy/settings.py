@@ -14,6 +14,7 @@ import os
 import logging
 import environ
 import dj_database_url
+import django_heroku
 from socket import gethostname
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -168,3 +169,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+
+
+django_heroku.settings(locals())
+STATIC_ROOT = 'staticfiles'
