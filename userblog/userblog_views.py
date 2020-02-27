@@ -138,9 +138,8 @@ def insertAccessLog(request, *args, **kwargs):
             uuId = request.COOKIES.get('uuId')
 
             request.session['uuId'] = uuId
-            request.session.set_expiry(300)
+            # request.session.set_expiry(0)
 
-            request.session['uuId'] = uuId
             if request.COOKIES.get('uuId') == request.session.get('uuId'):
                 logger.debug('セッションにUUIDが存在するため新規UUIDは発行しない。')
 
@@ -162,6 +161,7 @@ def insertAccessLog(request, *args, **kwargs):
             )
 
         else:
+            logger.debug(request.COOKIES)
             logger.debug('uuIdはCOOKIEに存在しない。')
 
     else:
