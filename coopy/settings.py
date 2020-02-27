@@ -62,7 +62,6 @@ else:
         # filemode = 'a'
     )
 
-
 # Application definition
 
 INSTALLED_APPS = [
