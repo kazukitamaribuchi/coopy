@@ -615,7 +615,9 @@ $(function() {
     if ($.cookie('uuId') == undefined) {
         console.log("uuid発行");
         var uuId = uuid();
-        $.cookie('uuId', uuId);
+        $.cookie('uuId', uuId, {
+            // secure: true
+        });
         console.log("uuid:" + uuid());
         console.log($.cookie('uuId'));
     } else {
