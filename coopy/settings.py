@@ -31,7 +31,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HOSTNAME = gethostname()
 # dotenv_path = os.path.join(BASE_DIR, '.env')
 # load_dotenv(dotenv_path)
-env = environ.ENV()
+env = environ.Env()
 env.read_env(os.path.join(BASE_DIR, '.env'))
 if 'local' in HOSTNAME:
     # ローカル環境の設定
