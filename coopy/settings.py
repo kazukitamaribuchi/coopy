@@ -13,36 +13,45 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import logging
 import environ
-import dj_database_url
 import django_heroku
 from socket import gethostname
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-env = environ.ENV()
-env.read_env(os.path.join(BASE_DIR, 'env'))
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
-HOSTNAME = gethostname()
+# try:
+#     from .local_settings import *
+# except ImportError:
+#     pass
 
-# DEBUG = True
-# DEBUG = False
+HOSTNAME = gethostname()
+env = environ.ENV()
+env.read_env(os.path.join(BASE_DIR, '.env'))
 if 'local' in HOSTNAME:
     # ローカル環境の設定
-    # SECURITY WARNING: don't run with debug turned on in production!
+    print('ローカル')
     DEBUG = env.get_value('DEBUG', cast=bool, default=False)
     SECRET_KEY = env('SECRET_KEY')
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
-    DATABASES = env.dict('DATABASE')
+    DARABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+    # database = env.dict('DATABASE')
+    # DATABASES = database['default']
 
 else:
     # 本番環境の設定
+    print("本番環境")
     DEBUG = False
     SECRET_KEY = environ['SECRET_KEY']
     ALLOWED_HOSTS = ['*']
+    import dj_database_url
     db_from_env = dj_database_url.config()
     DATABASES = {
         'default' : dj_database_url.config()
@@ -158,6 +167,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_URL = 'blog:login'
@@ -168,7 +178,3 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-
-
-django_heroku.settings(locals())
-STATIC_ROOT = 'staticfiles'
