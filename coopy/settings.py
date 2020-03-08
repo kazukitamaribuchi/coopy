@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import logging
 import environ
-import django_heroku
 from socket import gethostname
 # from dotenv import load_dotenv
 
@@ -38,8 +37,8 @@ if 'local' in HOSTNAME:
     print('ローカル')
     DEBUG = env.get_value('DEBUG', cast=bool, default=False)
     SECRET_KEY = env('SECRET_KEY')
-    # ALLOWED_HOSTS = os.environ.list('ALLOWED_HOSTS')
-    ALLOWED_HOSTS = ['192.168.33.11','192.168.33.12','192.168.33.13',]
+    ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+    # ALLOWED_HOSTS = ['192.168.33.11','192.168.33.12','192.168.33.13',]
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -171,3 +170,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+
+import django_heroku
+django_heroku.settings(local())
