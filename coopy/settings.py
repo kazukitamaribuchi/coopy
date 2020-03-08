@@ -50,7 +50,7 @@ else:
     # 本番環境の設定
     print("本番環境")
     DEBUG = False
-    SECRET_KEY = environ['SECRET_KEY']
+    SECRET_KEY = os.environ['SECRET_KEY']
     ALLOWED_HOSTS = ['*']
     import dj_database_url
     db_from_env = dj_database_url.config()
@@ -87,13 +87,13 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'coopy.urls'
@@ -115,17 +115,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'coopy.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
