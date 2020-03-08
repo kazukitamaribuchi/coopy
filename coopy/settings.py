@@ -12,9 +12,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import logging
-import environ
 import django_heroku
 from socket import gethostname
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,15 +28,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 #     pass
 
 HOSTNAME = gethostname()
-env = environ.ENV()
-env.read_env(os.path.join(BASE_DIR, '.env'))
+dotenv_path = os.path.join(BASE_DIR, '.env')
+load_dotenv(dotenv_path)
 if 'local' in HOSTNAME:
     # ローカル環境の設定
     print('ローカル')
-    DEBUG = env.get_value('DEBUG', cast=bool, default=False)
-    SECRET_KEY = env('SECRET_KEY')
-    ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
-    DARABASES = {
+    DEBUG = os.environ.get('DEBUG')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    # ALLOWED_HOSTS = os.environ.list('ALLOWED_HOSTS')
+    ALLOWED_HOSTS = ['192.168.33.11','192.168.33.12','192.168.33.13',]
+    DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
