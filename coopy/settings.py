@@ -38,16 +38,12 @@ if 'local' in HOSTNAME:
     DEBUG = env.get_value('DEBUG', cast=bool, default=False)
     SECRET_KEY = env('SECRET_KEY')
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
-    # ALLOWED_HOSTS = ['192.168.33.11','192.168.33.12','192.168.33.13',]
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-    # database = env.dict('DATABASE')
-    # DATABASES = database['default']
-
 else:
     # 本番環境の設定
     print("本番環境")
