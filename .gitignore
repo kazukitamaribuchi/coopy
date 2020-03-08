@@ -1,4 +1,4 @@
 /*.sqlite3
 /blog/migrations/
 /*.env
-/coopy/local_settings.py/
+/coopy/local_settings.py
