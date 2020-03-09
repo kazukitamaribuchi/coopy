@@ -113,8 +113,6 @@ def insertAccessLog(request, *args, **kwargs):
     access_blog_owner = TARGET_BLOG.user
     access_blog_url = TARGET_BLOG.url
 
-    logger.info(request.META)
-
     if 'favicon.ico' not in page:
         user = request.user
         # timezone = request.META['TZ']
