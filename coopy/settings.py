@@ -39,7 +39,7 @@ if 'local' in HOSTNAME:
     SECRET_KEY = env('SECRET_KEY')
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
     DATABASES = {
-        'default': env.db()
+        'default': env.db(),
     }
 else:
     # 本番環境の設定
@@ -166,3 +166,4 @@ SESSION_COOKIE_SECURE = True
 
 import django_heroku
 django_heroku.settings(locals())
+del DATABASES['default']['OPTIONS']['sslmode']
