@@ -117,8 +117,9 @@ def insertAccessLog(request, *args, **kwargs):
 
     if 'favicon.ico' not in page:
         user = request.user
-        timezone = request.META['TZ']
-        language = request.META['LANG']
+        # timezone = request.META['TZ']
+        timezone = 'Asia/Tokyo'
+        language = request.META['HTTP_ACCEPT_LANGUAGE']
         user_agent = request.META['HTTP_USER_AGENT']
         pattern = r'(?<=\().*;'
         device = re.search(pattern, user_agent).group(0)[:-1].split('; ')[0]
