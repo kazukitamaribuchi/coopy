@@ -39,10 +39,7 @@ if 'local' in HOSTNAME:
     SECRET_KEY = env('SECRET_KEY')
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
+        'default': env.db()
     }
 else:
     # 本番環境の設定
