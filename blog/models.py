@@ -119,6 +119,7 @@ class Blog(models.Model):
     url = models.SlugField(_('Url'))
     icon = models.ImageField(_('Icon'), upload_to="upload/test")
     temp_no = models.CharField(max_length=20, blank=True, null=True)
+    temp_path = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_('Updated at'), auto_now=True)
 

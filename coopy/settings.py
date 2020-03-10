@@ -36,11 +36,12 @@ if 'local' in HOSTNAME:
     # ローカル環境の設定
     print('ローカル')
     DEBUG = env.get_value('DEBUG', cast=bool, default=False)
-    SECRET_KEY = env('SECRET_KEY')
+    SECRET_KEY = env.get_value('SECRET_KEY')
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
     DATABASES = {
         'default': env.db(),
     }
+
 else:
     # 本番環境の設定
     print("本番環境")
@@ -52,6 +53,8 @@ else:
     DATABASES = {
         'default' : dj_database_url.config()
     }
+    SESSION_COOLIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 if DEBUG:
     logging.basicConfig(
@@ -153,7 +156,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_URL = 'blog:login'
@@ -161,9 +163,6 @@ LOGIN_REDIRECT_URL = 'blog:index'
 
 AUTH_USER_MODEL = 'blog.MyUser'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
 
 import django_heroku
 django_heroku.settings(locals())
