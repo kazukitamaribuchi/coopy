@@ -595,7 +595,9 @@ $(function() {
 
     function selectTempSuccess(data){
         console.log('テンプレートの選択に成功しました');
-        location.reload();
+        console.log(data);
+        $('#togleDesignTemplate').attr('href', './static/css/designTemplateCss/thema-' + data.temp_no + '.css');
+        // location.reload();
     }
 
     function uuid() {

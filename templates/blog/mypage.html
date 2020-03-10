@@ -1,12 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block headTag %}
-	{% with 'css/designTemplateCss/thema-'|add:blog.temp_no|add:'.css' as temp_css %}
-		<link href="{% static temp_css %}" rel="stylesheet" id="togleDesignTemplate">
-	{% endwith %}
-{% endblock %}
-
 {% block header %}
 	{% include 'include/header-3.html' %}
 {% endblock %}
