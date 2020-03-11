@@ -34,7 +34,6 @@ env = environ.Env()
 env.read_env(os.path.join(BASE_DIR, '.env'))
 if 'local' in HOSTNAME:
     # ローカル環境の設定
-    print('ローカル')
     DEBUG = env.get_value('DEBUG', cast=bool, default=False)
     SECRET_KEY = env.get_value('SECRET_KEY')
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')

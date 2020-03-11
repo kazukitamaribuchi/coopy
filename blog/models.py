@@ -35,7 +35,8 @@ class UserManager(BaseUserManager):
         Blog.objects.create(
             title=blog_title,
             user=user,
-            temp_no='1',
+            # temp_no='1',
+            # temp_path='css/designTemplateCss/thema-1.css',
             url=user.username,
         )
 
@@ -118,8 +119,8 @@ class Blog(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE, primary_key=True)
     url = models.SlugField(_('Url'))
     icon = models.ImageField(_('Icon'), upload_to="upload/test")
-    temp_no = models.CharField(max_length=20, blank=True, null=True)
-    temp_path = models.CharField(max_length=255, blank=True, null=True)
+    temp_no = models.CharField(max_length=20, blank=True, null=True, default='1')
+    temp_path = models.CharField(max_length=255, blank=True, null=True, default='css/designTemplateCss/thema-1.css')
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_('Updated at'), auto_now=True)
 

@@ -989,17 +989,19 @@ class DesignCustomizeView(LoginRequiredMixin, generic.TemplateView):
     def post(self, request, *args, **kwargs):
         post_data = request.POST.copy();
         temp_no = post_data['temp_no']
+        temp_path = post_data['temp_path']
 
         try:
             blog = Blog.objects.get(user=request.user)
             blog.temp_no = temp_no
+            blog.temp_path = temp_path
             blog.save()
-            logger.info('テンプレートNo',blog.temp_no)
 
             res = {
                 'status' : 'success',
                 'message' : 'テンプレートの選択に成功しました',
-                'temp_no' : temp_no
+                'temp_no' : temp_no,
+                'temp_path' : temp_path,
             }
 
             return JsonResponse(res)
@@ -1009,7 +1011,8 @@ class DesignCustomizeView(LoginRequiredMixin, generic.TemplateView):
             res = {
                 'status' : 'error',
                 'message' : 'テンプレートの選択に失敗しました',
-                'temp_no' : temp_no
+                'temp_no' : temp_no,
+                'temp_path' : temp_path,
             }
 
             return JsonResponse(res, status=500)

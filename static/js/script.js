@@ -573,20 +573,21 @@ $(function() {
             var obj = $(e.target);
             var parent = obj.parents('.temp_select_wrap');
             temp_no = obj.data('temp-no');
+            temp_path = getTempPath(temp_no)
 
             console.log(obj);
             console.log(parent);
             console.log(temp_no);
+            console.log(temp_path);
             $('.temp_selected').removeClass('temp_selected');
             parent.addClass('temp_selected');
-
-
         })
 
         $('.design_customize_submit_btn').on('click', function(e){
             var url = ''
             var data = {
-                temp_no : temp_no
+                temp_no : temp_no,
+                temp_path : temp_path,
             }
             commonPostAjax(url, data, selectTempSuccess);
         })
@@ -596,8 +597,7 @@ $(function() {
     function selectTempSuccess(data){
         console.log('テンプレートの選択に成功しました');
         console.log(data);
-        $('#togleDesignTemplate').attr('href', './static/css/designTemplateCss/thema-' + data.temp_no + '.css');
-        // location.reload();
+        $('#togleDesignTemplate').attr('href', '/static/' + data.temp_path);
     }
 
     function uuid() {
@@ -632,5 +632,9 @@ $(function() {
         var blogUrl = window.URL.createObjectURL(file);
         $('#file_preview').attr('src', blogUrl);
     })
+
+    function getTempPath(tempNo){
+        return 'css/designTemplateCss/thema-'+ tempNo +'.css';
+    }
 
 });
