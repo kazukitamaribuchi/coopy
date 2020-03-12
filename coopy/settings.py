@@ -164,6 +164,7 @@ LOGIN_REDIRECT_URL = 'blog:index'
 AUTH_USER_MODEL = 'blog.MyUser'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-import django_heroku
-django_heroku.settings(locals())
-del DATABASES['default']['OPTIONS']['sslmode']
+if not DEBUG:
+    import django_heroku
+    django_heroku.settings(locals())
+    del DATABASES['default']['OPTIONS']['sslmode']
