@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block headTag%}
+	<link href="{% static blog.temp_path %}" rel="stylesheet" id="togleDesignTemplate">
+{% endblock %}
+
 {% block header %}
 	{% include 'include/header-3.html' %}
 {% endblock %}
