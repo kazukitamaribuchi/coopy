@@ -4,6 +4,7 @@
 <header class="container-fluid mypage_header">
 	<div class="row header_wrap d-flex">
 		<h1 class="logo col-4 text-left">
+			<a href="{% url 'blog:index' %}"><img src="{% static 'img/Coopy_LOGO.png' %}" alt="blog_logo" class="logo_image"></a>
 		</h1>
 		<!-- ユーザー認証済:true -->
 		{% if user.is_authenticated %}
