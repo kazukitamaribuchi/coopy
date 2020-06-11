@@ -18,3 +18,7 @@ Coopy is the Blog Service that is created for practice by Django.
 
 # Author
 
+[kRysTasis](https://github.com/kRysTasis) 
+<br>
+<br>
+[Pithuy](https://github.com/shutotakizawa)
