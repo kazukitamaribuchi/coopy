@@ -1,4 +1,4 @@
-
+# Coopy
 
 <div align="center"><img src="https://user-images.githubusercontent.com/39425808/84466126-a1173e80-acb3-11ea-9305-e0025d3491df.png"></div>
 
@@ -39,7 +39,6 @@ Coopy is the Blog Service that is created for practice by Django.
 
 # Author
 
-[kRysTasis](https://github.com/kRysTasis) 
-<br>
-<br>
-[Pithuy](https://github.com/shutotakizawa)
+
+[<img src="https://user-images.githubusercontent.com/39425808/84468413-b8592a80-acb9-11ea-8f6a-d962144b2e41.png" width="150px">](https://github.com/kRysTasis)
+[<img src="https://user-images.githubusercontent.com/39425808/84468489-eccce680-acb9-11ea-8d16-94b22aa796a1.png" width="150px">](https://github.com/shutotakizawa)
