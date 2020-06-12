@@ -16,7 +16,6 @@
   <img src="https://img.shields.io/github/issues/kRysTasis/coopy">
   <img src="https://img.shields.io/github/forks/kRysTasis/coopy">
   <img src="https://img.shields.io/github/stars/kRysTasis/coopy">
-  <img src="https://img.shields.io/github/stars/kRysTasis/coopy">
 </span>
 
 
