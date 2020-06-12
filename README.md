@@ -2,6 +2,10 @@
   <h1>Coopy</h1>
 </div>
 
+<br>
+
+<br>
+
 <div align="center"><img src="https://user-images.githubusercontent.com/39425808/84466126-a1173e80-acb3-11ea-9305-e0025d3491df.png"></div>
 
 <br>
