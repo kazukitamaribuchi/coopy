@@ -19,7 +19,7 @@
 </span>
 
 
-Coopy is the Blog Service that is created for practice by Django.
+Coopy is the Blog Service that is created for practice in Django.
 
 
 <br>
