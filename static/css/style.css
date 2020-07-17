@@ -69,9 +69,12 @@ textarea {
 
 /*-----------------------header------------------------ */
 
+.logo {
+    height: 100%;
+}
+
 .logo_image {
-    width: 192px;
-    height: 27px;
+    height: 100%;
 }
 
 .post_search_form_wrap {

@@ -155,7 +155,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_URL = 'blog:login'
@@ -164,6 +163,7 @@ LOGIN_REDIRECT_URL = 'blog:index'
 AUTH_USER_MODEL = 'blog.MyUser'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-import django_heroku
-django_heroku.settings(locals())
-del DATABASES['default']['OPTIONS']['sslmode']
+if not DEBUG:
+    import django_heroku
+    django_heroku.settings(locals())
+    del DATABASES['default']['OPTIONS']['sslmode']
