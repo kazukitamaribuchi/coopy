@@ -1,0 +1,21 @@
+version: '3'
+services:
+  # nginx:
+  #   image: nginx:1.13
+  #   container_name: web-server
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./nginx/conf:/etc/nginx.conf.d
+  #     - ./static:/urs/share/nginx/html/
+  coopy:
+    build: .
+    image: coopy
+    container_name: coopy
+    env_file:
+      - .env
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./:/usr/src/coopy/
+    tty: true

@@ -14,7 +14,11 @@ logger = logging.getLogger(__name__)
 LOG_FILE_PATH = 'logs/access_log.csv'
 BROWSER_LIST = ['Chrome', 'Firefox', 'Edge', 'Safari', 'Other']
 
+
 class UserBlogView(BaseListView):
+    """
+    ユーザー毎のブログを表示させるView
+    """
 
     template_name = 'blog/myblog.html'
     context_object_name = 'posts_list'
@@ -54,6 +58,9 @@ class UserBlogView(BaseListView):
 
 
 class PostDetailView(generic.DetailView, ModelFormMixin):
+    """
+    記事詳細を表示させるView
+    """
 
     model = Post
     form_class = CommentForm
@@ -95,6 +102,9 @@ class PostDetailView(generic.DetailView, ModelFormMixin):
 
 
 def insertAccessLog(request, *args, **kwargs):
+    """
+    アクセスログをDBに書き込む
+    """
 
     host = request.get_host()
     ip_address = request.META.get('REMOTE_ADDR')
@@ -103,6 +113,8 @@ def insertAccessLog(request, *args, **kwargs):
     access_page = request.get_full_path()[1:]
     access_blog_slug = access_page[:access_page.index('/')]
 
+
+    # 対象ブログを取得
     try:
         TARGET_BLOG = Blog.objects.get(url=access_blog_slug)
     except Blog.DoesNotExist:
@@ -113,62 +125,56 @@ def insertAccessLog(request, *args, **kwargs):
     access_blog_owner = TARGET_BLOG.user
     access_blog_url = TARGET_BLOG.url
 
-    if 'favicon.ico' not in page:
-        user = request.user
-        # timezone = request.META['TZ']
-        timezone = 'Asia/Tokyo'
-        language = request.META['HTTP_ACCEPT_LANGUAGE']
-        user_agent = request.META['HTTP_USER_AGENT']
-        pattern = r'(?<=\().*;'
-        device = re.search(pattern, user_agent).group(0)[:-1].split('; ')[0]
-        now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    if 'favicon.ico' in page:
+        logger.debug('faviconログは省く')
+        return
 
-        referer = request.META['HTTP_REFERER'] if 'HTTP_REFERER' in request.META else None
+    user = request.user
+    timezone = request.META['TZ'] if 'TZ' in request.META else 'Asia/Tokyo'
+    language = request.META['HTTP_ACCEPT_LANGUAGE']
+    user_agent = request.META['HTTP_USER_AGENT']
+    pattern = r'(?<=\().*;'
+    device = re.search(pattern, user_agent).group(0)[:-1].split('; ')[0]
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-        pattern2 = r'(?<=\)\s)+(.*)'
-        USER_AGENT = re.search(pattern2, user_agent).group(0).split(' ')
-        browser = re.match(r'.*(?=[/\s])', USER_AGENT[-1]).group(0)
+    referer = request.META['HTTP_REFERER'] if 'HTTP_REFERER' in request.META else None
 
-        if browser == 'Safari':
-            browser = 'Chrome' if USER_AGENT[-2][0:6] == 'Chrome' else 'Safari'
-        if browser not in BROWSER_LIST:
-            browser = 'Other'
+    pattern2 = r'(?<=\)\s)+(.*)'
+    USER_AGENT = re.search(pattern2, user_agent).group(0).split(' ')
+    browser = re.match(r'.*(?=[/\s])', USER_AGENT[-1]).group(0)
 
-        if request.COOKIES.get('uuId') != None:
-            logger.debug('uuIdが存在する')
-            uuId = request.COOKIES.get('uuId')
+    # ブラウザセット
+    if browser == 'Safari':
+        browser = 'Chrome' if USER_AGENT[-2][0:6] == 'Chrome' else 'Safari'
+    if browser not in BROWSER_LIST:
+        browser = 'Other'
 
-            request.session['uuId'] = uuId
-            # request.session.set_expiry(0)
+    # UUIDがcookieに含まれていたら
+    if request.COOKIES.get('uuId') != None:
+        logger.debug('uuIdが存在する')
+        uuId = request.COOKIES.get('uuId')
 
-            if request.COOKIES.get('uuId') == request.session.get('uuId'):
-                logger.debug('セッションにUUIDが存在するため新規UUIDは発行しない。')
+        request.session['uuId'] = uuId
+        # request.session.set_expiry(0)
 
-            AccessLog.objects.create(
-                blog_pk=access_blog_id,
-                blog_name=access_blog_name,
-                blog_owner=access_blog_owner,
-                blog_url=access_blog_url,
-                uuId=uuId,
-                ip=ip_address,
-                page=page,
-                user=user,
-                timezone=timezone,
-                language=language,
-                device=device,
-                now=now,
-                referer=referer,
-                browser=browser
-            )
+        if request.COOKIES.get('uuId') == request.session.get('uuId'):
+            logger.debug('セッションにUUIDが存在するため新規UUIDは発行しない。')
 
-        else:
-            logger.debug(request.COOKIES)
-            logger.debug('uuIdはCOOKIEに存在しない。')
+        AccessLog.objects.create(
+            blog_pk=access_blog_id,
+            blog_name=access_blog_name,
+            blog_owner=access_blog_owner,
+            blog_url=access_blog_url,
+            uuId=uuId,
+            ip=ip_address,
+            page=page,
+            user=user,
+            timezone=timezone,
+            language=language,
+            device=device,
+            now=now,
+            referer=referer,
+            browser=browser
+        )
 
-    else:
-        logger.debug('faviconログはいらんから飛ばす')
-
-
-# def setCookie(response):
-#     response.set_cookie('test', 'test')
-#     return response
+    assert request.COOKIES.get('uuid') is None, logger.debug('uuIdはCOOKIEに存在しない。')

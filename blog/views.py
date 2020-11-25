@@ -53,6 +53,7 @@ logger = logging.getLogger(__name__)
 LOG_FILE_PATH = 'logs/access_log.csv'
 BROWSER_LIST = ['Chrome', 'Firefox', 'Edge', 'Safari', 'Other']
 
+
 # ListViewのための継承用クラス
 # paginate_by, ordering, template_nameはページ毎に指定する。
 class BaseListView(generic.ListView):
@@ -204,6 +205,7 @@ class SignupView(generic.CreateView):
 class SignupDoneView(generic.TemplateView):
 
     template_name = 'register/signup_done.html'
+
 
 # メール認証完了後のページ
 class SignupCompleteView(generic.TemplateView):
@@ -374,6 +376,7 @@ class AddTagView(generic.View):
             }
             return JsonResponse(res, status=500)
 
+
 class AddCategoryView(generic.View):
 
     def post(self, request, *args, **kwargs):
@@ -488,6 +491,7 @@ class PostDetailView(generic.DetailView, ModelFormMixin):
         })
         return context
 
+
 class MyPageView(LoginRequiredMixin, generic.TemplateView):
 
     template_name = 'blog/mypage.html'
@@ -503,6 +507,7 @@ class MyPageView(LoginRequiredMixin, generic.TemplateView):
             'blog': Blog.objects.get(user=self.request.user)
         })
         return context
+
 
 class AccountDetailView(LoginRequiredMixin, generic.DetailView):
 
@@ -570,6 +575,7 @@ class BlogManagementView(LoginRequiredMixin, generic.UpdateView):
 class CommentPostView(generic.TemplateView):
 
     template_name = 'blog/comment_post.html'
+
 
 class SearchResultView(BaseListView):
 
@@ -704,7 +710,6 @@ class UpdateUsernameView(LoginRequiredMixin, generic.View):
             return JsonResponse(res, status=500)
 
 
-
 class UpdateEmailView(LoginRequiredMixin, generic.View):
 
     def post(self, request, *args, **kwargs):
@@ -798,8 +803,6 @@ class EditContentsListView(LoginRequiredMixin, BaseListView):
             'blog': Blog.objects.get(user=self.request.user),
         })
         return context
-
-
 
 
 class EditContentView(LoginRequiredMixin,generic.UpdateView):
@@ -1086,6 +1089,7 @@ class UpdateBlogUrlView(LoginRequiredMixin, generic.View):
 
             return JsonResponse(res, status=500)
 
+
 class UpdateBlogInfoAllView(LoginRequiredMixin, generic.View):
 
     def post(self, request, *args, **kwargs):
@@ -1128,8 +1132,6 @@ class UpdateBlogInfoAllView(LoginRequiredMixin, generic.View):
             return JsonResponse(res, status=500)
 
 
-
-
 class AccessAnalyticsView(LoginRequiredMixin, generic.TemplateView):
 
     template_name = 'blog/mypage.html'
@@ -1158,19 +1160,18 @@ class AccessAnalyticsView(LoginRequiredMixin, generic.TemplateView):
         week_user = 0
         week_device = 0
 
-        if isAccess:
-            if len(AccessAnalytics.objects.filter(blog_name_q)) != 0:
-                AnalyticsInstance = AccessAnalytics.objects.filter(blog_name_q).order_by('-created_at').first()
-                day_pv = AnalyticsInstance.day_pv
-                day_user = AnalyticsInstance.day_user
-                week_pv = AnalyticsInstance.week_pv
-                week_user = AnalyticsInstance.week_user
+        if isAccess and len(AccessAnalytics.objects.filter(blog_name_q)) != 0:
+            AnalyticsInstance = AccessAnalytics.objects.filter(blog_name_q).order_by('-created_at').first()
+            day_pv = AnalyticsInstance.day_pv
+            day_user = AnalyticsInstance.day_user
+            week_pv = AnalyticsInstance.week_pv
+            week_user = AnalyticsInstance.week_user
 
-                pv_img_week = FILE_PATH + blog_name + '_pv_week.png'
+            pv_img_week = FILE_PATH + blog_name + '_pv_week.png'
 
-                # 解析してないからとりあえず固定
-                day_device = '39.8%'
-                week_device = '39.8%'
+            # 解析してないからとりあえず固定
+            day_device = '39.8%'
+            week_device = '39.8%'
 
 
         context.update({
@@ -1186,6 +1187,7 @@ class AccessAnalyticsView(LoginRequiredMixin, generic.TemplateView):
             'week_user': week_user,
         })
         return context
+
 
 class CategoryListView(BaseListView):
     template_name = 'blog/category_list.html'
@@ -1207,6 +1209,7 @@ class CategoryListView(BaseListView):
         queryset = Post.objects.filter(category__name=self.kwargs['str'])
 
         return queryset
+
 
 class TagsListView(BaseListView):
     template_name = 'blog/tags_list.html'

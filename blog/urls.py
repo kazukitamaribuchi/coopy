@@ -40,13 +40,4 @@ urlpatterns = [
     # path('cotegory_list/(?P<category>\w+)/', views.CategoryListView.as_view(), name='category_list'),
     path('cotegory_list/<str>/', views.CategoryListView.as_view(), name='category_list'),
     path('tags_list/<str>/', views.TagsListView.as_view(), name='tags_list'),
-    ##-- 個人ブログ --##
-    # path('', views.IndexView.as_view(), name='home'),
-    # path('post/<str:pk>/', views.PostDetailView.as_view(), name='post_detail'),
-    # path('category/<slug>/', views.CategoryView.as_view(), name='category'),
-    # path('tag/<slug>/', views.TagView.as_view(), name='tag'),
-    # path('post/<str:pk>/comment/', views.CommentView.as_view(), name='comment'),
-    # path('comment/post/', views.CommentPostView.as_view(), name='comment_post'),
-    # path('about/', views.AboutMeView.as_view(), name='about_me'),
-    # path('contact/', views.ContactView.as_view(), name='contact'),
 ]

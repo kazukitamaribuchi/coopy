@@ -1,3 +1,5 @@
 /*.sqlite3
 /*.env
 /coopy/local_settings.py
+media/
+**/**/migrations

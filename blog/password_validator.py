@@ -6,6 +6,10 @@ import re
 
 
 class MyCommonPasswordValidator:
+    """
+    カスタムバリデーター
+        - 英数字8文字以上で大文字、小文字、数字が含まれているかチェック
+    """
 
     def validate(self, password, user=None):
         pattern = r'(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,50}$'
