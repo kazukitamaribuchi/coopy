@@ -118,6 +118,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = os.environ['SENDGRID_API_KEY']
+EMAIL_USE_TLS = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
@@ -128,7 +133,7 @@ LOGIN_URL = 'blog:login'
 LOGIN_REDIRECT_URL = 'blog:index'
 
 AUTH_USER_MODEL = 'blog.MyUser'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 if not DEBUG:
     import django_heroku
