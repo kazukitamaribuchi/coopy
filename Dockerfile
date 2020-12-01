@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && \
   apt-get clean && \
   pip install --upgrade pip && \
+  pip install django-pure-pagination gunicorn && \
   conda update -n base conda && \
   conda update --all && \
   conda install -c conda-forge nodejs=10.13.0 && \
@@ -26,7 +27,3 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   conda install -c conda-forge django-heroku && \
   conda install -c conda-forge dj-static && \
   conda install -c conda-forge whitenoise
-
-ADD . .
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt

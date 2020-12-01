@@ -12,7 +12,7 @@ if os.environ['DJANGO_ENV'] == 'develop':
     print("開発環境")
     DEBUG = os.environ['DEBUG']
     SECRET_KEY = os.environ['SECRET_KEY']
-    ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS']
+    ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -24,7 +24,7 @@ else:
     print("本番環境")
     DEBUG = os.environ['DEBUG']
     SECRET_KEY = os.environ['SECRET_KEY']
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
     import dj_database_url
     db_from_env = dj_database_url.config()
     DATABASES = {
