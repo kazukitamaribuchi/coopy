@@ -9,9 +9,11 @@ services:
   #     - ./nginx/conf:/etc/nginx.conf.d
   #     - ./static:/urs/share/nginx/html/
   coopy:
-    build: .
-    image: coopy
-    container_name: coopy
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: coopy-dev
+    container_name: coopy-dev
     env_file:
       - local.env
     ports:

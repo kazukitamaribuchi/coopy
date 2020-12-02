@@ -27,18 +27,3 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   conda install -c conda-forge django-heroku && \
   conda install -c conda-forge dj-static && \
   conda install -c conda-forge whitenoise
-
-ENV DJANGO_ENV production
-
-COPY . .
-RUN python manage.py collectstatic --noinput
-MAINTAINER admin
-
-ENV USER admin
-
-RUN useradd -m ${USER}
-RUN gpasswd -a ${USER} sudo
-RUN echo "${USER}:test_pass" | chpasswd
-USER ${USER}
-
-CMD gunicorn -b 0.0.0.0:$PORT coopy.wsgi

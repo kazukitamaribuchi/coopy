@@ -1,17 +1,11 @@
 import os
 import logging
-import environ
-from socket import gethostname
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-HOSTNAME = gethostname()
-
 if os.environ['DJANGO_ENV'] == 'develop':
     # ローカル環境の設定
-    print("開発環境")
     DEBUG = os.environ['DEBUG']
-    SECRET_KEY = os.environ['SECRET_KEY']
     ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
     DATABASES = {
         'default': {
@@ -19,11 +13,18 @@ if os.environ['DJANGO_ENV'] == 'develop':
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+    logging.basicConfig(
+        level = logging.DEBUG,
+        format = '''%(levelname)s %(asctime)s %(pathname)s:%(funcName)s:%(lineno)s
+        %(message)s''')
 else:
+    import environ
+    env = environ.Env()
+    env.read_env('.env')
+
     # 本番環境の設定
     print("本番環境")
     DEBUG = os.environ['DEBUG']
-    SECRET_KEY = os.environ['SECRET_KEY']
     ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
     import dj_database_url
     db_from_env = dj_database_url.config()
@@ -32,13 +33,6 @@ else:
     }
     SESSION_COOLIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-
-if DEBUG:
-    logging.basicConfig(
-        level = logging.DEBUG,
-        format = '''%(levelname)s %(asctime)s %(pathname)s:%(funcName)s:%(lineno)s
-        %(message)s''')
-else:
     logging.basicConfig(
         level = logging.DEBUG,
         format = '''%(levelname)s %(asctime)s %(pathname)s:%(funcName)s 行数:%(lineno)s:%(lineno)s
@@ -47,10 +41,9 @@ else:
         # filemode = 'a'
     )
 
+SECRET_KEY = os.environ['SECRET_KEY']
+
 logger = logging.getLogger(__name__)
-
-
-
 
 INSTALLED_APPS = [
     'blog.apps.BlogConfig',
