@@ -36,6 +36,7 @@ MAINTAINER admin
 
 ENV USER admin
 
+
 RUN useradd -m ${USER}
 RUN gpasswd -a ${USER} sudo
 RUN echo "${USER}:test_pass" | chpasswd
