@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   pip install --upgrade pip && \
   pip install django-pure-pagination gunicorn && \
   conda update -n base conda && \
+  conta install anaconda && \
   conda update --all && \
   conda clean --all -y && \
   conda install -c conda-forge nodejs=10.13.0 && \
