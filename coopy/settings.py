@@ -3,10 +3,8 @@ import logging
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-print('★★環境変数★★')
+print('★★環境変数1★★')
 print(os.environ)
-SECRET_KEY = os.environ['SECRET_KEY']
-ALLOWED_HOSTS = ['*']
 
 if os.environ['DJANGO_ENV'] == 'production':
     print("本番環境")
@@ -19,6 +17,8 @@ if os.environ['DJANGO_ENV'] == 'production':
     SESSION_COOLIE_SECURE = True
     CSRF_COOKIE_SECURE = True
 else:
+    import django_heroku
+    django_heroku.settings(locals())
     DEBUG = True
     DATABASES = {
         'default': {
@@ -26,6 +26,12 @@ else:
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+
+print('★★環境変数2★★')
+print(os.environ)
+
+SECRET_KEY = os.environ['SECRET_KEY']
+ALLOWED_HOSTS = ['*']
 
 logging.basicConfig(
     level = logging.DEBUG,
@@ -121,6 +127,4 @@ AUTH_USER_MODEL = 'blog.MyUser'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 if not DEBUG:
-    import django_heroku
-    django_heroku.settings(locals())
     del DATABASES['default']['OPTIONS']['sslmode']
