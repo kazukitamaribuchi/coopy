@@ -19,14 +19,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   pip install django-pure-pagination gunicorn && \
   conda update -n base conda && \
   conda update --all && \
-  conda install -c conda-forge nodejs=10.13.0 && \
   conda clean --all -y && \
+  conda install -c conda-forge nodejs=10.13.0 && \
   conda install -c anaconda django && \
   conda install -c conda-forge django-environ && \
-  conda install -c conda-forge dj-database-url && \
   conda install -c conda-forge django-heroku && \
   conda install -c conda-forge dj-static && \
-  conda install -c conda-forge whitenoise
+  conda install -c conda-forge whitenoise && \
+  conda install -c conda-forge dj-database-url
 
 ENV DJANGO_ENV production
 
