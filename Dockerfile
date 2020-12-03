@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && \
   apt-get clean && \
   pip install --upgrade pip && \
-  pip install django-pure-pagination gunicorn && \
+  pip install django-pure-pagination gunicorn dj3-cloudinary-storage && \
   # conda update -n base conda && \
   conda update --all && \
   # conda clean --all -y && \

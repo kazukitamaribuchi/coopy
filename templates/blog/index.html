@@ -36,7 +36,7 @@
                 <div class="post_thumbnail_wrap">
                     <!-- サムネの有無確認 -->
                     {% if post.thumbnail %}
-                        <a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="/media/{{ post.thumbnail }}" alt="{{ post.title }}"></a>
+                        <a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="{{ post.thumbnail }}" alt="{{ post.title }}"></a>
                     {% else %}
                         <a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="{% static 'img/light1.png' %}" alt="thumbnail_none"></a>
                     {% endif %}
@@ -78,7 +78,7 @@
                     <div class="post_thumbnail_wrap">
                         <!-- サムネの有無確認 -->
                         {% if post.thumbnail %}
-                            <a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="/media/{{ post.thumbnail }}" alt="{{ post.title }}"></a>
+                            <a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="{{ post.thumbnail }}" alt="{{ post.title }}"></a>
                         {% else %}
                             <a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="{% static 'img/light1.png' %}" alt="thumbnail_none"></a>
                         {% endif %}

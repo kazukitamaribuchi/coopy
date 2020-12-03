@@ -43,7 +43,7 @@
             </form>
 
             <p>サムネイルアップロード
-                <img id='file_preview' src="/media/{{ post.thumbnail }}" width='100%' alt="">
+                <img id='file_preview' src="{{ post.thumbnail }}" width='100%' alt="">
                 <label id="id_thumbnail_wrap" class="btn btn-dark" for="id_thumbnail">
                     ファイルを選択
                     {{ form.thumbnail }}
