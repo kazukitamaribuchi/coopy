@@ -3,8 +3,7 @@ import logging
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-print('★★環境変数1★★')
-print(os.environ)
+SECRET_KEY = os.environ['SECRET_KEY']
 
 if os.environ['DJANGO_ENV'] == 'production':
     print("本番環境")
@@ -59,16 +58,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-if not DEBUG:
-    import django_heroku
-    django_heroku.settings(locals())
-    # del DATABASES['default']['OPTIONS']['sslmode']
-
-print('★★環境変数2★★')
-print(os.environ)
-
-SECRET_KEY = os.environ['SECRET_KEY']
 
 
 ROOT_URLCONF = 'coopy.urls'
@@ -131,4 +120,6 @@ AUTH_USER_MODEL = 'blog.MyUser'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 if not DEBUG:
+    import django_heroku
+    django_heroku.settings(locals())
     del DATABASES['default']['OPTIONS']['sslmode']
