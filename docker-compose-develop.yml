@@ -1,13 +1,5 @@
 version: '3'
 services:
-  # nginx:
-  #   image: nginx:1.13
-  #   container_name: web-server
-  #   ports:
-  #     - "80:80"
-  #   volumes:
-  #     - ./nginx/conf:/etc/nginx.conf.d
-  #     - ./static:/urs/share/nginx/html/
   coopy:
     build:
       context: .
@@ -15,7 +7,7 @@ services:
     image: coopy-dev
     container_name: coopy-dev
     env_file:
-      - local.env
+      - .env
     ports:
       - '8000:8000'
     volumes:

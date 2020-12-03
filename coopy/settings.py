@@ -7,8 +7,8 @@ import environ
 env = environ.Env()
 env.read_env('.env')
 
-print('env読む')
-print(env)
+print('★★★シークレットキー↓')
+print(env('SECRET_KEY'))
 
 SECRET_KEY = env('SECRET_KEY')
 ALLOWED_HOSTS = ['*']
