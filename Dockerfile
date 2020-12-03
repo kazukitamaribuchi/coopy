@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   conda clean --all -y && \
   conda install -c conda-forge nodejs=10.13.0 && \
   conda install -c anaconda django && \
-  conda install -c conda-forge django-environ && \
+  conda install -c auto django-environ  && \
   conda install -c conda-forge django-heroku && \
   conda install -c conda-forge dj-static && \
   conda install -c conda-forge whitenoise && \
