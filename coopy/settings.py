@@ -4,28 +4,20 @@ import logging
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 if os.environ['DJANGO_ENV'] == 'develop':
-    # ローカル環境の設定
-    DEBUG = os.environ['DEBUG']
-    ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
+    DEBUG = True
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-    logging.basicConfig(
-        level = logging.DEBUG,
-        format = '''%(levelname)s %(asctime)s %(pathname)s:%(funcName)s:%(lineno)s
-        %(message)s''')
 else:
     import environ
     env = environ.Env()
     env.read_env('.env')
 
-    # 本番環境の設定
     print("本番環境")
-    DEBUG = os.environ['DEBUG']
-    ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
+    DEBUG = False
     import dj_database_url
     db_from_env = dj_database_url.config()
     DATABASES = {
@@ -33,15 +25,18 @@ else:
     }
     SESSION_COOLIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    logging.basicConfig(
-        level = logging.DEBUG,
-        format = '''%(levelname)s %(asctime)s %(pathname)s:%(funcName)s 行数:%(lineno)s:%(lineno)s
-        %(message)s'''
-        # filename = 'logs/debug.log',
-        # filemode = 'a'
-    )
+
+
+logging.basicConfig(
+    level = logging.DEBUG,
+    format = '''%(levelname)s %(asctime)s %(pathname)s:%(funcName)s 行数:%(lineno)s:%(lineno)s
+    %(message)s'''
+    # filename = 'logs/debug.log',
+    # filemode = 'a'
+)
 
 SECRET_KEY = os.environ['SECRET_KEY']
+ALLOWED_HOSTS = ['*']
 
 logger = logging.getLogger(__name__)
 
