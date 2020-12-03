@@ -8,9 +8,6 @@ print(os.environ)
 
 if os.environ['DJANGO_ENV'] == 'production':
     print("本番環境")
-    import django_heroku
-    django_heroku.settings(locals())
-    
     DEBUG = False
     import dj_database_url
     db_from_env = dj_database_url.config()
@@ -28,10 +25,6 @@ else:
         }
     }
 
-print('★★環境変数2★★')
-print(os.environ)
-
-SECRET_KEY = os.environ['SECRET_KEY']
 ALLOWED_HOSTS = ['*']
 
 logging.basicConfig(
@@ -128,4 +121,11 @@ AUTH_USER_MODEL = 'blog.MyUser'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 if not DEBUG:
+    import django_heroku
+    django_heroku.settings(locals())
     del DATABASES['default']['OPTIONS']['sslmode']
+
+print('★★環境変数2★★')
+print(os.environ)
+
+SECRET_KEY = os.environ['SECRET_KEY']
