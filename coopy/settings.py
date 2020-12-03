@@ -63,7 +63,7 @@ MIDDLEWARE = [
 if not DEBUG:
     import django_heroku
     django_heroku.settings(locals())
-    del DATABASES['default']['OPTIONS']['sslmode']
+    # del DATABASES['default']['OPTIONS']['sslmode']
 
 print('★★環境変数2★★')
 print(os.environ)
@@ -129,3 +129,6 @@ LOGIN_REDIRECT_URL = 'blog:index'
 
 AUTH_USER_MODEL = 'blog.MyUser'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+if not DEBUG:
+    del DATABASES['default']['OPTIONS']['sslmode']
