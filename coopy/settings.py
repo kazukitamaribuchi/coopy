@@ -5,13 +5,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 import environ
 env = environ.Env()
+env.read_env('.env')
+
+print('env読む')
+print(env)
+
+SECRET_KEY = env('SECRET_KEY')
+ALLOWED_HOSTS = ['*']
 
 if os.environ['DJANGO_ENV'] == 'production':
-    env.read_env('.env')
-
     print("本番環境")
     DEBUG = False
-    SECRET_KEY = env('SECRET_KEY')
     import dj_database_url
     db_from_env = dj_database_url.config()
     DATABASES = {
@@ -20,10 +24,7 @@ if os.environ['DJANGO_ENV'] == 'production':
     SESSION_COOLIE_SECURE = True
     CSRF_COOKIE_SECURE = True
 else:
-    env.read_env('local.env')
-
     DEBUG = True
-    SECRET_KEY = env('SECRET_KEY')
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -38,8 +39,6 @@ logging.basicConfig(
     # filename = 'logs/debug.log',
     # filemode = 'a'
 )
-
-ALLOWED_HOSTS = ['*']
 
 logger = logging.getLogger(__name__)
 
