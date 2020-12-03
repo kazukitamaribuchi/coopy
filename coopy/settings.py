@@ -8,6 +8,9 @@ print(os.environ)
 
 if os.environ['DJANGO_ENV'] == 'production':
     print("本番環境")
+    import django_heroku
+    django_heroku.settings(locals())
+    
     DEBUG = False
     import dj_database_url
     db_from_env = dj_database_url.config()
@@ -17,8 +20,6 @@ if os.environ['DJANGO_ENV'] == 'production':
     SESSION_COOLIE_SECURE = True
     CSRF_COOKIE_SECURE = True
 else:
-    import django_heroku
-    django_heroku.settings(locals())
     DEBUG = True
     DATABASES = {
         'default': {
