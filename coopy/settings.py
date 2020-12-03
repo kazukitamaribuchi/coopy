@@ -3,21 +3,15 @@ import logging
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-if os.environ['DJANGO_ENV'] == 'develop':
-    DEBUG = True
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
-else:
-    import environ
-    env = environ.Env()
+import environ
+env = environ.Env()
+
+if os.environ['DJANGO_ENV'] == 'production':
     env.read_env('.env')
 
     print("本番環境")
     DEBUG = False
+    SECRET_KEY = env('SECRET_KEY')
     import dj_database_url
     db_from_env = dj_database_url.config()
     DATABASES = {
@@ -25,7 +19,17 @@ else:
     }
     SESSION_COOLIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+else:
+    env.read_env('local.env')
 
+    DEBUG = True
+    SECRET_KEY = env('SECRET_KEY')
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 logging.basicConfig(
     level = logging.DEBUG,
@@ -35,7 +39,6 @@ logging.basicConfig(
     # filemode = 'a'
 )
 
-SECRET_KEY = os.environ['SECRET_KEY']
 ALLOWED_HOSTS = ['*']
 
 logger = logging.getLogger(__name__)
@@ -109,7 +112,7 @@ USE_TZ = True
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = os.environ['SENDGRID_API_KEY']
+EMAIL_HOST_PASSWORD = env('SENDGRID_API_KEY')
 EMAIL_USE_TLS = True
 
 STATIC_URL = '/static/'
