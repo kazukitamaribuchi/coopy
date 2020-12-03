@@ -3,14 +3,9 @@ import logging
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-import environ
-env = environ.Env()
-env.read_env('.env')
-
-print('★★★シークレットキー↓')
-print(env('SECRET_KEY'))
-
-SECRET_KEY = env('SECRET_KEY')
+print('★★環境変数★★')
+print(os.environ)
+SECRET_KEY = os.environ['SECRET_KEY']
 ALLOWED_HOSTS = ['*']
 
 if os.environ['DJANGO_ENV'] == 'production':
@@ -111,7 +106,7 @@ USE_TZ = True
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = env('SENDGRID_API_KEY')
+EMAIL_HOST_PASSWORD = os.environ['SENDGRID_API_KEY']
 EMAIL_USE_TLS = True
 
 STATIC_URL = '/static/'
