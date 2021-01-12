@@ -3,3 +3,4 @@
 /coopy/local_settings.py
 media/
 **/**/migrations
+.DS_Store
