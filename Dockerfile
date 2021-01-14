@@ -1,4 +1,4 @@
-FROM continuumio/anaconda3
+FROM continuumio/anaconda3:2020.02
 
 ENV PYTHONUNBUFFERED 1
 
@@ -17,10 +17,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   apt-get clean && \
   pip install --upgrade pip && \
   pip install django-pure-pagination gunicorn dj3-cloudinary-storage && \
-  # conda update -n base conda && \
+  conda update -n base conda && \
   conda update --all && \
-  # conda clean --all -y && \
-  conda install -c conda-forge nodejs && \
+  conda clean --all -y && \
+  conda install -c conda-forge nodejs=10.13.0 && \
   conda install -c anaconda django && \
   conda install -c conda-forge django-environ && \
   conda install -c conda-forge dj-database-url && \
