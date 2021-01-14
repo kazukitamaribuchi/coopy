@@ -21,7 +21,7 @@
 		<li class="row search_result_wrap">
 			<div class="col-4 search_thumbnail_wrap">
 				{% if post.thumbnail %}
-					<a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="{{ post.thumbnail }}" alt="{{ post.title }}"></a>
+					<a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="{{ post.thumbnail.url }}" alt="{{ post.title }}"></a>
 				{% else %}
 					<a href="/{{ post.blog.url }}/entry/{{ post.pk }}"><img src="{% static 'img/light1.png' %}" alt="{{ post.title }}"></a>
 				{% endif %}

@@ -33,7 +33,7 @@
 		<div class="detail_thumbnail_wrap mt-2">
 			<!-- サムネの有無確認 -->
 			{% if detail.thumbnail %}
-				<img src="{{ detail.thumbnail }}" alt="{{ detal.title }}">
+				<img src="{{ detail.thumbnail.url }}" alt="{{ detal.title }}">
 			{% else %}
 				<img src="{% static 'img/light1.png' %}" alt="thumbnail_none">
 			{% endif %}

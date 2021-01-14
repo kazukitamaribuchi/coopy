@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   conda install -c conda-forge dj-database-url && \
   conda install -c conda-forge django-heroku && \
   conda install -c conda-forge dj-static && \
+  conda install -c anaconda psycopg2 && \
   conda install -c conda-forge whitenoise
 
 ENV DJANGO_ENV production
